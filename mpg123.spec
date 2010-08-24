@@ -3,8 +3,8 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.12.1
-Release:        4%{?dist}
+Version:        1.12.3
+Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
@@ -165,6 +165,9 @@ fi
 
 
 %changelog
+* Tue Aug 24 2010 Hans de Goede <j.w.r.degoede@hhs.nl> 1.12.3-1
+- New upstream release 1.12.3
+
 * Fri Jul 16 2010 Hans de Goede <j.w.r.degoede@hhs.nl> 1.12.1-4
 - Put the pulseaudio and jack output plugins in their own subpackages (rf#1278)
 
