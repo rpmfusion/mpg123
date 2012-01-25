@@ -4,7 +4,7 @@
 
 Name:           mpg123
 Version:        1.12.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
@@ -165,6 +165,9 @@ fi
 
 
 %changelog
+* Wed Jan 25 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.12.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Tue Aug 24 2010 Hans de Goede <j.w.r.degoede@hhs.nl> 1.12.3-1
 - New upstream release 1.12.3
 
