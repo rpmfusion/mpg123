@@ -3,14 +3,13 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.12.3
-Release:        2%{?dist}
+Version:        1.13.4
+Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
 URL:            http://mpg123.org/
 Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz2
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel esound-devel
 BuildRequires:  jack-audio-connection-kit-devel nas-devel arts-devel
 BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
@@ -84,7 +83,6 @@ make %{?_smp_mflags}
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
 # mpg321 also "provides" a mpg123 manpage an binary so mv ours to mpg123.bin
@@ -97,10 +95,6 @@ mv $RPM_BUILD_ROOT%{_mandir}/man1/mpg123.1 \
 ln -s mpg123.bin $RPM_BUILD_ROOT%{_bindir}/mpg123
 ln -s mpg123.bin $RPM_BUILD_ROOT%{_bindir}/mp3-cmdline
 ln -s mpg123.bin.1 $RPM_BUILD_ROOT%{_mandir}/man1/mpg123.1
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 
 %post
@@ -123,7 +117,6 @@ fi
 
 
 %files
-%defattr(-,root,root,-)
 %{_bindir}/mpg123.bin
 %ghost %{_bindir}/mpg123
 %ghost %{_bindir}/mp3-cmdline
@@ -135,15 +128,12 @@ fi
 %ghost %{_mandir}/man1/mpg123.1%{man_ext}
 
 %files plugins-pulseaudio
-%defattr(-,root,root,-)
 %{_libdir}/mpg123/output_pulse.*
 
 %files plugins-jack
-%defattr(-,root,root,-)
 %{_libdir}/mpg123/output_jack.*
 
 %files plugins-extras
-%defattr(-,root,root,-)
 %{_libdir}/mpg123/output_arts.*
 %{_libdir}/mpg123/output_esd.*
 %{_libdir}/mpg123/output_nas.*
@@ -152,12 +142,10 @@ fi
 %{_libdir}/mpg123/output_sdl.*
 
 %files -n libmpg123
-%defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING NEWS README
 %{_libdir}/libmpg123.so.*
 
 %files -n libmpg123-devel
-%defattr(-,root,root,-)
 %doc doc/*
 %{_includedir}/mpg123.h
 %{_libdir}/libmpg123.so
@@ -165,6 +153,9 @@ fi
 
 
 %changelog
+* Sun Jan 29 2012 Hans de Goede <j.w.r.degoede@gmail.com> - 1.13.4-1
+- New upstream release 1.13.4
+
 * Wed Jan 25 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.12.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
