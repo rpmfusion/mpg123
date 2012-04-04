@@ -3,7 +3,7 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.13.4
+Version:        1.13.7
 Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
@@ -13,6 +13,7 @@ Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz
 BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel esound-devel
 BuildRequires:  jack-audio-connection-kit-devel nas-devel arts-devel
 BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
+BuildRequires:  doxygen
 Requires(post): %{_sbindir}/alternatives
 Requires(postun): %{_sbindir}/alternatives
 Provides:       mp3-cmdline = %{version}-%{release}
@@ -72,6 +73,7 @@ developing applications that use libmpg123.
 iconv -f iso8859-1 -t utf8 AUTHORS -o AUTHORS.utf8
 touch -r AUTHORS AUTHORS.utf8
 mv AUTHORS.utf8 AUTHORS
+echo "HTML_TIMESTAMP=NO" >> doc/doxygen.conf
 
 
 %build
@@ -80,11 +82,17 @@ mv AUTHORS.utf8 AUTHORS
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 make %{?_smp_mflags}
+pushd doc
+doxygen doxygen.conf
+popd
 
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 rm $RPM_BUILD_ROOT%{_libdir}/*.la
+mkdir -p $RPM_BUILD_ROOT%{_mandir}/man3
+install -m 644 -p doc/man/man3/mpg123*.3 $RPM_BUILD_ROOT%{_mandir}/man3
+install -m 644 -p doc/man/man3/MPG123*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 # mpg321 also "provides" a mpg123 manpage an binary so mv ours to mpg123.bin
 # and use alternatives
 mv $RPM_BUILD_ROOT%{_bindir}/mpg123 $RPM_BUILD_ROOT%{_bindir}/mpg123.bin
@@ -117,6 +125,7 @@ fi
 
 
 %files
+%doc doc/README.remote
 %{_bindir}/mpg123.bin
 %ghost %{_bindir}/mpg123
 %ghost %{_bindir}/mp3-cmdline
@@ -146,13 +155,18 @@ fi
 %{_libdir}/libmpg123.so.*
 
 %files -n libmpg123-devel
-%doc doc/*
+%doc doc/BENCHMARKING doc/README.gain doc/html doc/examples
 %{_includedir}/mpg123.h
 %{_libdir}/libmpg123.so
 %{_libdir}/pkgconfig/libmpg123.pc
+%{_mandir}/man3/*.3*
 
 
 %changelog
+* Wed Apr  4 2012 Hans de Goede <j.w.r.degoede@gmail.com> - 1.13.7-1
+- New upstream bugfix release 1.13.7
+- Properly build and install development documentation (rf#2257)
+
 * Sun Jan 29 2012 Hans de Goede <j.w.r.degoede@gmail.com> - 1.13.4-1
 - New upstream release 1.13.4
 
