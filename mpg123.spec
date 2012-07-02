@@ -3,7 +3,7 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.13.7
+Version:        1.14.3
 Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
@@ -163,6 +163,9 @@ fi
 
 
 %changelog
+* Mon Jul 02 2012 Richard Shaw <hobbes1069@gmail.com> - 1.14.3-1
+- Update to latest upstream release.
+
 * Wed Apr  4 2012 Hans de Goede <j.w.r.degoede@gmail.com> - 1.13.7-1
 - New upstream bugfix release 1.13.7
 - Properly build and install development documentation (rf#2257)
