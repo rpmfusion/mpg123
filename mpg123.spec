@@ -152,7 +152,7 @@ fi
 %{_libdir}/libmpg123.so.*
 
 %files -n libmpg123-devel
-%exclude doc/README.remote %doc doc/*
+%doc doc/BENCHMARKING doc/README.gain doc/html doc/examples
 %{_includedir}/mpg123.h
 %{_libdir}/libmpg123.so
 %{_libdir}/pkgconfig/libmpg123.pc
