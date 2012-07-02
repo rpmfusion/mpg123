@@ -13,6 +13,7 @@ Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz
 BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel esound-devel
 BuildRequires:  jack-audio-connection-kit-devel nas-devel arts-devel
 BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
+BuildRequires:  doxygen
 Requires(post): %{_sbindir}/alternatives
 Requires(postun): %{_sbindir}/alternatives
 Provides:       mp3-cmdline = %{version}-%{release}
