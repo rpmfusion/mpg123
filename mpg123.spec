@@ -4,7 +4,7 @@
 
 Name:           mpg123
 Version:        1.13.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
@@ -125,7 +125,7 @@ fi
 
 
 %files
-%doc doc/README.remote
+%doc README doc/README.remote
 %{_bindir}/mpg123.bin
 %ghost %{_bindir}/mpg123
 %ghost %{_bindir}/mp3-cmdline
@@ -163,6 +163,9 @@ fi
 
 
 %changelog
+* Mon Jul 02 2012 Richard Shaw <hobbes1069@gmail.com> - 1.13.7-2
+- Move README to correct package. Fixes #1898.
+
 * Wed Apr  4 2012 Hans de Goede <j.w.r.degoede@gmail.com> - 1.13.7-1
 - New upstream bugfix release 1.13.7
 - Properly build and install development documentation (rf#2257)
