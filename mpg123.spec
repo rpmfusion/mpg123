@@ -122,7 +122,7 @@ fi
 
 
 %files
-%doc README README.remote
+%doc README doc/README.remote
 %{_bindir}/mpg123.bin
 %ghost %{_bindir}/mpg123
 %ghost %{_bindir}/mp3-cmdline
