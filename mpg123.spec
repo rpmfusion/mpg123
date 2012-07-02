@@ -3,14 +3,13 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.12.3
+Version:        1.12.5
 Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
 URL:            http://mpg123.org/
 Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz2
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel esound-devel
 BuildRequires:  jack-audio-connection-kit-devel nas-devel arts-devel
 BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
@@ -25,7 +24,7 @@ Real time command line MPEG audio player for Layer 1, 2 and Layer3.
 %package plugins-pulseaudio
 Summary:        Pulseaudio output plug-in for mpg123
 Group:          Applications/Multimedia
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description plugins-pulseaudio
 Pulseaudio output plug-in for mpg123.
@@ -34,7 +33,7 @@ Pulseaudio output plug-in for mpg123.
 %package plugins-jack
 Summary:        JACK output plug-in for mpg123
 Group:          Applications/Multimedia
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description plugins-jack
 JACK output plug-in for mpg123.
@@ -43,7 +42,7 @@ JACK output plug-in for mpg123.
 %package plugins-extras
 Summary:        Extra output plugins for mpg123
 Group:          Applications/Multimedia
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description plugins-extras
 Extra (non often used) output plugins for mpg123 which require additional
@@ -123,7 +122,7 @@ fi
 
 
 %files
-%defattr(-,root,root,-)
+%doc README README.remote
 %{_bindir}/mpg123.bin
 %ghost %{_bindir}/mpg123
 %ghost %{_bindir}/mp3-cmdline
@@ -135,15 +134,12 @@ fi
 %ghost %{_mandir}/man1/mpg123.1%{man_ext}
 
 %files plugins-pulseaudio
-%defattr(-,root,root,-)
 %{_libdir}/mpg123/output_pulse.*
 
 %files plugins-jack
-%defattr(-,root,root,-)
 %{_libdir}/mpg123/output_jack.*
 
 %files plugins-extras
-%defattr(-,root,root,-)
 %{_libdir}/mpg123/output_arts.*
 %{_libdir}/mpg123/output_esd.*
 %{_libdir}/mpg123/output_nas.*
@@ -152,19 +148,21 @@ fi
 %{_libdir}/mpg123/output_sdl.*
 
 %files -n libmpg123
-%defattr(-,root,root,-)
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog COPYING NEWS
 %{_libdir}/libmpg123.so.*
 
 %files -n libmpg123-devel
-%defattr(-,root,root,-)
-%doc doc/*
+%exclude doc/README.remote %doc doc/*
 %{_includedir}/mpg123.h
 %{_libdir}/libmpg123.so
 %{_libdir}/pkgconfig/libmpg123.pc
 
 
 %changelog
+* Mon Jul 02 2012 Richard Shaw <hobbes1069@gmail.com> - 1.12.5-1
+- Update to latest bugfix release.
+- Move README and README.remote to correct package. Fixes #1898.
+
 * Tue Aug 24 2010 Hans de Goede <j.w.r.degoede@hhs.nl> 1.12.3-1
 - New upstream release 1.12.3
 
