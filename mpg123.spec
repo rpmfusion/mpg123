@@ -3,7 +3,7 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.13.7
+Version:        1.14.3
 Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
@@ -25,7 +25,7 @@ Real time command line MPEG audio player for Layer 1, 2 and Layer3.
 %package plugins-pulseaudio
 Summary:        Pulseaudio output plug-in for mpg123
 Group:          Applications/Multimedia
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description plugins-pulseaudio
 Pulseaudio output plug-in for mpg123.
@@ -34,7 +34,7 @@ Pulseaudio output plug-in for mpg123.
 %package plugins-jack
 Summary:        JACK output plug-in for mpg123
 Group:          Applications/Multimedia
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description plugins-jack
 JACK output plug-in for mpg123.
@@ -43,7 +43,7 @@ JACK output plug-in for mpg123.
 %package plugins-extras
 Summary:        Extra output plugins for mpg123
 Group:          Applications/Multimedia
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description plugins-extras
 Extra (non often used) output plugins for mpg123 which require additional
@@ -125,7 +125,7 @@ fi
 
 
 %files
-%doc doc/README.remote
+%doc README doc/README.remote
 %{_bindir}/mpg123.bin
 %ghost %{_bindir}/mpg123
 %ghost %{_bindir}/mp3-cmdline
@@ -163,6 +163,10 @@ fi
 
 
 %changelog
+* Mon Jul 02 2012 Richard Shaw <hobbes1069@gmail.com> - 1.14.3-1
+- Update to latest upstream release.
+- Move README and README.remote to correct package. Fixes #1898.
+
 * Wed Apr  4 2012 Hans de Goede <j.w.r.degoede@gmail.com> - 1.13.7-1
 - New upstream bugfix release 1.13.7
 - Properly build and install development documentation (rf#2257)
