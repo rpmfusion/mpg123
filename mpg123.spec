@@ -151,7 +151,7 @@ fi
 %{_libdir}/mpg123/output_sdl.*
 
 %files -n libmpg123
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog COPYING NEWS
 %{_libdir}/libmpg123.so.*
 
 %files -n libmpg123-devel
