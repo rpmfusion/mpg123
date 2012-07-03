@@ -3,8 +3,8 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.13.7
-Release:        2%{?dist}
+Version:        1.13.8
+Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
@@ -163,7 +163,8 @@ fi
 
 
 %changelog
-* Mon Jul 02 2012 Richard Shaw <hobbes1069@gmail.com> - 1.13.7-2
+* Mon Jul 02 2012 Richard Shaw <hobbes1069@gmail.com> - 1.13.8-1
+- Update to latest bugfix release.
 - Move README to correct package. Fixes #1898.
 
 * Wed Apr  4 2012 Hans de Goede <j.w.r.degoede@gmail.com> - 1.13.7-1
