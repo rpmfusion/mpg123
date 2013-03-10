@@ -3,15 +3,15 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.14.3
-Release:        2%{?dist}
+Version:        1.15.1
+Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
 URL:            http://mpg123.org/
 Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz2
-BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel esound-devel
-BuildRequires:  jack-audio-connection-kit-devel nas-devel arts-devel
+BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel
+BuildRequires:  jack-audio-connection-kit-devel nas-devel
 BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
 BuildRequires:  doxygen
 Requires(post): %{_sbindir}/alternatives
@@ -143,8 +143,6 @@ fi
 %{_libdir}/mpg123/output_jack.*
 
 %files plugins-extras
-%{_libdir}/mpg123/output_arts.*
-%{_libdir}/mpg123/output_esd.*
 %{_libdir}/mpg123/output_nas.*
 %{_libdir}/mpg123/output_openal.*
 %{_libdir}/mpg123/output_portaudio.*
@@ -163,6 +161,10 @@ fi
 
 
 %changelog
+* Sun Mar 10 2013 Hans de Goede <j.w.r.degoede@gmail.com> - 1.15.1-1
+- New upstream release 1.15.1 (rf#2716)
+- Drop obsolete esound and arts plugins from mpg123-plugins-extras
+
 * Sun Mar 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.14.3-2
 - Mass rebuilt for Fedora 19 Features
 
