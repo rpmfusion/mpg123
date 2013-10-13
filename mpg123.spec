@@ -3,7 +3,7 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.15.1
+Version:        1.16.0
 Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
@@ -127,6 +127,8 @@ fi
 %files
 %doc README doc/README.remote
 %{_bindir}/mpg123.bin
+%{_bindir}/mpg123-id3dump
+%{_bindir}/mpg123-strip
 %ghost %{_bindir}/mpg123
 %ghost %{_bindir}/mp3-cmdline
 %dir %{_libdir}/mpg123
@@ -161,6 +163,9 @@ fi
 
 
 %changelog
+* Sun Oct 13 2013 Hans de Goede <j.w.r.degoede@gmail.com> - 1.16.0-1
+- New upstream release 1.16.0
+
 * Sun Mar 10 2013 Hans de Goede <j.w.r.degoede@gmail.com> - 1.15.1-1
 - New upstream release 1.15.1 (rf#2716)
 - Drop obsolete esound and arts plugins from mpg123-plugins-extras
