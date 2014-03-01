@@ -3,7 +3,7 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.16.0
+Version:        1.18.1
 Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
@@ -163,6 +163,12 @@ fi
 
 
 %changelog
+* Sat Mar 01 2014 Michael Kuhn <suraia@ikkoku.de> - 1.18.1-1
+- Update to 1.18.1.
+
+* Sat Jan 04 2014 Michael Kuhn <suraia@ikkoku.de> - 1.17.0-1
+- Update to 1.17.0.
+
 * Sun Oct 13 2013 Hans de Goede <j.w.r.degoede@gmail.com> - 1.16.0-1
 - New upstream release 1.16.0
 
