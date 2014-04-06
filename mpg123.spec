@@ -3,17 +3,20 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.18.1
+Version:        1.19.0
 Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
 URL:            http://mpg123.org/
 Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz2
+Patch0:         mpg123-1.19.0-armv7hl.patch
 BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel
 BuildRequires:  jack-audio-connection-kit-devel nas-devel
 BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
 BuildRequires:  doxygen
+BuildRequires:  libtool automake autoconf
+Requires:       libmpg123%{?_isa} = %{version}-%{release}
 Requires(post): %{_sbindir}/alternatives
 Requires(postun): %{_sbindir}/alternatives
 Provides:       mp3-cmdline = %{version}-%{release}
@@ -61,7 +64,7 @@ MPEG audio Layer 1, 2 and Layer3 library.
 %package -n libmpg123-devel
 Summary:        Development files for mpg123
 Group:          Development/Libraries
-Requires:       libmpg123 = %{version}-%{release}, pkgconfig
+Requires:       libmpg123%{?_isa} = %{version}-%{release}
 
 %description -n libmpg123-devel
 The libmpg123-devel package contains libraries and header files for
@@ -70,6 +73,9 @@ developing applications that use libmpg123.
 
 %prep
 %setup -q
+%patch0 -p1
+# for patch0
+autoreconf -i -f
 iconv -f iso8859-1 -t utf8 AUTHORS -o AUTHORS.utf8
 touch -r AUTHORS AUTHORS.utf8
 mv AUTHORS.utf8 AUTHORS
@@ -163,6 +169,11 @@ fi
 
 
 %changelog
+* Sun Apr  6 2014 Hans de Goede <j.w.r.degoede@gmail.com> - 1.19.0-1
+- Update to 1.19.0
+- Enable (optional) use of NEON on arm
+- Add missing %%{?_isa} to libmpg123 Requires in -devel (rf#3194)
+
 * Sat Mar 01 2014 Michael Kuhn <suraia@ikkoku.de> - 1.18.1-1
 - Update to 1.18.1.
 
