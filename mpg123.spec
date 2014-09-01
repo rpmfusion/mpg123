@@ -4,7 +4,7 @@
 
 Name:           mpg123
 Version:        1.19.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
@@ -169,6 +169,9 @@ fi
 
 
 %changelog
+* Mon Sep 01 2014 Sérgio Basto <sergio@serjux.com> - 1.19.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Sun Apr  6 2014 Hans de Goede <j.w.r.degoede@gmail.com> - 1.19.0-1
 - Update to 1.19.0
 - Enable (optional) use of NEON on arm
