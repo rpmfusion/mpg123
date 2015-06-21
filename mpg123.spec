@@ -3,19 +3,17 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.19.0
-Release:        2%{?dist}
+Version:        1.22.2
+Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
 URL:            http://mpg123.org/
 Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz2
-Patch0:         mpg123-1.19.0-armv7hl.patch
 BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel
 BuildRequires:  jack-audio-connection-kit-devel nas-devel
 BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
 BuildRequires:  doxygen
-BuildRequires:  libtool automake autoconf
 Requires:       libmpg123%{?_isa} = %{version}-%{release}
 Requires(post): %{_sbindir}/alternatives
 Requires(postun): %{_sbindir}/alternatives
@@ -73,9 +71,6 @@ developing applications that use libmpg123.
 
 %prep
 %setup -q
-%patch0 -p1
-# for patch0
-autoreconf -i -f
 iconv -f iso8859-1 -t utf8 AUTHORS -o AUTHORS.utf8
 touch -r AUTHORS AUTHORS.utf8
 mv AUTHORS.utf8 AUTHORS
@@ -135,6 +130,7 @@ fi
 %{_bindir}/mpg123.bin
 %{_bindir}/mpg123-id3dump
 %{_bindir}/mpg123-strip
+%{_bindir}/out123
 %ghost %{_bindir}/mpg123
 %ghost %{_bindir}/mp3-cmdline
 %dir %{_libdir}/mpg123
@@ -142,6 +138,7 @@ fi
 %{_libdir}/mpg123/output_dummy.*
 %{_libdir}/mpg123/output_oss.*
 %{_mandir}/man1/mpg123.bin.1%{man_ext}
+%{_mandir}/man1/out123.1%{man_ext}
 %ghost %{_mandir}/man1/mpg123.1%{man_ext}
 
 %files plugins-pulseaudio
@@ -169,6 +166,9 @@ fi
 
 
 %changelog
+* Sun Jun 21 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.22.2-1
+- New upstream release 1.22.2
+
 * Mon Sep 01 2014 Sérgio Basto <sergio@serjux.com> - 1.19.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
