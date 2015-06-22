@@ -4,12 +4,14 @@
 
 Name:           mpg123
 Version:        1.22.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
 URL:            http://mpg123.org/
 Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz2
+# Fix playback of files with apetags, submitted upstream
+Patch0:         mpg123-1.22.2-apetag.patch
 BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel
 BuildRequires:  jack-audio-connection-kit-devel nas-devel
 BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
@@ -71,6 +73,7 @@ developing applications that use libmpg123.
 
 %prep
 %setup -q
+%patch0 -p1
 iconv -f iso8859-1 -t utf8 AUTHORS -o AUTHORS.utf8
 touch -r AUTHORS AUTHORS.utf8
 mv AUTHORS.utf8 AUTHORS
@@ -166,6 +169,9 @@ fi
 
 
 %changelog
+* Mon Jun 22 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.22.2-2
+- Fix playback of files with apetags
+
 * Sun Jun 21 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.22.2-1
 - New upstream release 1.22.2
 
