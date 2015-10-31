@@ -3,8 +3,8 @@
 %global apriority 99
 
 Name:           mpg123
-Version:        1.22.2
-Release:        2%{?dist}
+Version:        1.22.4
+Release:        1%{?dist}
 Summary:        MPEG audio player
 Group:          Applications/Multimedia
 License:        GPLv2+ and LGPLv2
@@ -169,6 +169,9 @@ fi
 
 
 %changelog
+* Sat Oct 31 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.22.4-1
+- New upstream release 1.22.4 (rf3802)
+
 * Mon Jun 22 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.22.2-2
 - Fix playback of files with apetags
 
