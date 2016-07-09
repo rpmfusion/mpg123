@@ -2,7 +2,7 @@
 %global fmt fmt123
 
 Name:           mpg123
-Version:        1.23.4
+Version:        1.23.6
 Release:        1%{?dist}
 Summary:        Real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3
 
@@ -135,6 +135,9 @@ find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
 %{_libdir}/pkgconfig/lib%{out}.pc
 
 %changelog
+* Sat Jul 09 2016 Igor Gnatenko <ignatenko@redhat.com> - 1.23.6-1
+- Update to 1.23.6
+
 * Mon Jun 27 2016 Igor Gnatenko <ignatenko@redhat.com> - 1.23.4-1
 - Update to 1.23.4
 - Use weak and rich deps for plugins
