@@ -83,7 +83,7 @@ Development files for decoding and output libraries.
 
 %build
 autoreconf -vfi
-%configure --enable-modules=yes --with-default-audio=alsa --with-audio=alsa,jack,pulse,oss
+%configure --enable-modules=yes --with-default-audio=alsa --with-audio=alsa,jack,pulse,oss,portaudio
 %make_build
 pushd doc
   doxygen doxygen.conf
