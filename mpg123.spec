@@ -46,7 +46,7 @@ Summary:        JACK output plug-in for %{name}
 BuildRequires:  pkgconfig(jack)
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Enhances:       %{name}%{?_isa}
-Obsoletes:      %{name}-plugins-extras%{?_isa} < 1.23.4-1
+Obsoletes:      %{name}-plugins-extras < 1.23.4-1
 
 %description plugins-jack %{_description}
 
@@ -64,7 +64,7 @@ PortAudio output plug-in.
 
 %package libs
 Summary:        %{summary}
-Obsoletes:      lib%{name}%{?_isa} < 1.23.4-1
+Obsoletes:      lib%{name} < 1.23.4-1
 
 %description libs %{_description}
 
@@ -72,7 +72,7 @@ Obsoletes:      lib%{name}%{?_isa} < 1.23.4-1
 Summary:        %{summary}
 BuildRequires:  /usr/bin/doxygen
 Requires:       %{name}-libs%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:      lib%{name}-devel%{?_isa} < 1.23.4-1
+Obsoletes:      lib%{name}-devel < 1.23.4-1
 
 %description libs-devel %{_description}
 
