@@ -3,7 +3,7 @@
 
 Name:           mpg123
 Version:        1.23.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3
 
 License:        LGPLv2+
@@ -64,6 +64,8 @@ PortAudio output plug-in.
 
 %package libs
 Summary:        %{summary}
+Provides:       lib%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       lib%{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:      lib%{name} < 1.23.4-1
 
 %description libs %{_description}
@@ -72,6 +74,8 @@ Obsoletes:      lib%{name} < 1.23.4-1
 Summary:        %{summary}
 BuildRequires:  /usr/bin/doxygen
 Requires:       %{name}-libs%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       lib%{name}-devel = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       lib%{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:      lib%{name}-devel < 1.23.4-1
 
 %description libs-devel %{_description}
@@ -135,6 +139,9 @@ find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
 %{_libdir}/pkgconfig/lib%{out}.pc
 
 %changelog
+* Tue Jul 26 2016 Igor Gnatenko <ignatenko@redhat.com> - 1.23.6-2
+- Provide old name for libs and libs-devel subpkgs
+
 * Sat Jul 09 2016 Igor Gnatenko <ignatenko@redhat.com> - 1.23.6-1
 - Update to 1.23.6
 
