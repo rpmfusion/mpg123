@@ -1,174 +1,169 @@
-%global man_ext .gz
-# alternatives priority (we are the real thing)
-%global apriority 99
+%global out out123
+%global fmt fmt123
 
 Name:           mpg123
-Version:        1.19.0
-Release:        1%{?dist}
-Summary:        MPEG audio player
-Group:          Applications/Multimedia
-License:        GPLv2+ and LGPLv2
-URL:            http://mpg123.org/
-Source:         http://downloads.sourceforge.net/mpg123/mpg123-%{version}.tar.bz2
-Patch0:         mpg123-1.19.0-armv7hl.patch
-BuildRequires:  libtool-ltdl-devel SDL-devel portaudio-devel
-BuildRequires:  jack-audio-connection-kit-devel nas-devel
-BuildRequires:  alsa-lib-devel pulseaudio-libs-devel openal-soft-devel
-BuildRequires:  doxygen
-BuildRequires:  libtool automake autoconf
-Requires:       libmpg123%{?_isa} = %{version}-%{release}
-Requires(post): %{_sbindir}/alternatives
-Requires(postun): %{_sbindir}/alternatives
-Provides:       mp3-cmdline = %{version}-%{release}
+Version:        1.23.6
+Release:        2%{?dist}
+Summary:        Real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3
 
-%description
-Real time command line MPEG audio player for Layer 1, 2 and Layer3.
+License:        LGPLv2+
+URL:            http://mpg123.org
+Source0:        %{url}/download/%{name}-%{version}.tar.bz2
 
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
+
+BuildRequires:  gcc
+BuildRequires:  libtool-ltdl-devel
+BuildRequires:  pkgconfig(alsa)
+
+Requires:       %{name}-libs%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+
+Recommends:     (%{name}-plugins-pulseaudio%{?_isa} if pulseaudio%{?_isa})
+Recommends:     (%{name}-plugins-jack%{?_isa} if jack-audio-connection-kit%{?_isa})
+Recommends:     (%{name}-plugins-portaudio%{?_isa} if portaudio%{?_isa})
+
+%global _description \
+Real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3 (most\
+commonly MPEG 1.0 layer 3 aka MP3), as well as re-usable decoding and output\
+libraries.
+
+%description %{_description}
 
 %package plugins-pulseaudio
-Summary:        Pulseaudio output plug-in for mpg123
-Group:          Applications/Multimedia
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Summary:        Plulseaudio output plug-in for %{name}
+BuildRequires:  pkgconfig(libpulse-simple)
+Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Enhances:       %{name}%{?_isa}
 
-%description plugins-pulseaudio
-Pulseaudio output plug-in for mpg123.
+%description plugins-pulseaudio %{_description}
 
+Pulseaudio output plug-in.
 
 %package plugins-jack
-Summary:        JACK output plug-in for mpg123
-Group:          Applications/Multimedia
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Summary:        JACK output plug-in for %{name}
+BuildRequires:  pkgconfig(jack)
+Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Enhances:       %{name}%{?_isa}
+Obsoletes:      %{name}-plugins-extras < 1.23.4-1
 
-%description plugins-jack
-JACK output plug-in for mpg123.
+%description plugins-jack %{_description}
 
+JACK output plug-in.
 
-%package plugins-extras
-Summary:        Extra output plugins for mpg123
-Group:          Applications/Multimedia
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+%package plugins-portaudio
+Summary:        PortAudio output plug-in for %{name}
+BuildRequires:  pkgconfig(portaudio-2.0)
+Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Enhances:       %{name}%{?_isa}
 
-%description plugins-extras
-Extra (non often used) output plugins for mpg123 which require additional
-dependencies to be installed.
+%description plugins-portaudio %{_description}
 
+PortAudio output plug-in.
 
-%package -n libmpg123
-Summary:        MPEG audio Layer 1, 2 and Layer3 library
-Group:          System Environment/Libraries
+%package libs
+Summary:        %{summary}
+Provides:       lib%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       lib%{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:      lib%{name} < 1.23.4-1
 
-%description -n libmpg123
-MPEG audio Layer 1, 2 and Layer3 library.
+%description libs %{_description}
 
+%package libs-devel
+Summary:        %{summary}
+BuildRequires:  /usr/bin/doxygen
+Requires:       %{name}-libs%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       lib%{name}-devel = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:       lib%{name}-devel%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:      lib%{name}-devel < 1.23.4-1
 
-%package -n libmpg123-devel
-Summary:        Development files for mpg123
-Group:          Development/Libraries
-Requires:       libmpg123%{?_isa} = %{version}-%{release}
+%description libs-devel %{_description}
 
-%description -n libmpg123-devel
-The libmpg123-devel package contains libraries and header files for
-developing applications that use libmpg123.
-
+Development files for decoding and output libraries.
 
 %prep
-%setup -q
-%patch0 -p1
-# for patch0
-autoreconf -i -f
-iconv -f iso8859-1 -t utf8 AUTHORS -o AUTHORS.utf8
-touch -r AUTHORS AUTHORS.utf8
-mv AUTHORS.utf8 AUTHORS
-echo "HTML_TIMESTAMP=NO" >> doc/doxygen.conf
-
+%autosetup
 
 %build
-%configure
-# Get rid of /usr/lib64 rpath on 64bit
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-make %{?_smp_mflags}
+autoreconf -vfi
+%configure --enable-modules=yes --with-default-audio=alsa --with-audio=alsa,jack,pulse,oss,portaudio
+%make_build
 pushd doc
-doxygen doxygen.conf
+  doxygen doxygen.conf
 popd
 
-
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-rm $RPM_BUILD_ROOT%{_libdir}/*.la
-mkdir -p $RPM_BUILD_ROOT%{_mandir}/man3
-install -m 644 -p doc/man/man3/mpg123*.3 $RPM_BUILD_ROOT%{_mandir}/man3
-install -m 644 -p doc/man/man3/MPG123*.3 $RPM_BUILD_ROOT%{_mandir}/man3
-# mpg321 also "provides" a mpg123 manpage an binary so mv ours to mpg123.bin
-# and use alternatives
-mv $RPM_BUILD_ROOT%{_bindir}/mpg123 $RPM_BUILD_ROOT%{_bindir}/mpg123.bin
-mv $RPM_BUILD_ROOT%{_mandir}/man1/mpg123.1 \
-   $RPM_BUILD_ROOT%{_mandir}/man1/mpg123.bin.1
-# prepare ghost alternatives
-# touch does not set the correct file mode bits 
-ln -s mpg123.bin $RPM_BUILD_ROOT%{_bindir}/mpg123
-ln -s mpg123.bin $RPM_BUILD_ROOT%{_bindir}/mp3-cmdline
-ln -s mpg123.bin.1 $RPM_BUILD_ROOT%{_mandir}/man1/mpg123.1
+%make_install
+find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
 
-
-%post
-%{_sbindir}/alternatives \
-  --install %{_bindir}/mpg123 mpg321_binlink %{_bindir}/mpg123.bin %{apriority} \
-  --slave %{_mandir}/man1/mpg123.1%{man_ext} mpg321_manlink %{_mandir}/man1/mpg123.bin.1%{man_ext} \
-  --slave %{_bindir}/mp3-cmdline mpg321_mp3cmdline %{_bindir}/mpg123.bin \
-  >/dev/null 2>&1 || :
-
-%postun
-if [ "$1" -eq 0 ]; then
-  %{_sbindir}/alternatives \
-    --remove mpg321_binlink %{_bindir}/mpg123.bin \
-    >/dev/null 2>&1 || :
-fi
-
-%post -n libmpg123 -p /sbin/ldconfig
-
-%postun -n libmpg123 -p /sbin/ldconfig
-
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %files
-%doc README doc/README.remote
-%{_bindir}/mpg123.bin
-%{_bindir}/mpg123-id3dump
-%{_bindir}/mpg123-strip
-%ghost %{_bindir}/mpg123
-%ghost %{_bindir}/mp3-cmdline
-%dir %{_libdir}/mpg123
-%{_libdir}/mpg123/output_alsa.*
-%{_libdir}/mpg123/output_dummy.*
-%{_libdir}/mpg123/output_oss.*
-%{_mandir}/man1/mpg123.bin.1%{man_ext}
-%ghost %{_mandir}/man1/mpg123.1%{man_ext}
+%doc doc/README.remote
+%{_bindir}/%{name}
+%{_bindir}/%{name}-id3dump
+%{_bindir}/%{name}-strip
+%{_bindir}/%{out}
+%doc %{_mandir}/man1/%{name}.1*
+%doc %{_mandir}/man1/%{out}.1*
+%dir %{_libdir}/%{name}/
+%{_libdir}/%{name}/output_alsa.so
+%{_libdir}/%{name}/output_dummy.so
+%{_libdir}/%{name}/output_oss.so
 
 %files plugins-pulseaudio
-%{_libdir}/mpg123/output_pulse.*
+%{_libdir}/%{name}/output_pulse.so
 
 %files plugins-jack
-%{_libdir}/mpg123/output_jack.*
+%{_libdir}/%{name}/output_jack.so
 
-%files plugins-extras
-%{_libdir}/mpg123/output_nas.*
-%{_libdir}/mpg123/output_openal.*
-%{_libdir}/mpg123/output_portaudio.*
-%{_libdir}/mpg123/output_sdl.*
+%files plugins-portaudio
+%{_libdir}/%{name}/output_portaudio.so
 
-%files -n libmpg123
-%doc AUTHORS ChangeLog COPYING NEWS README
-%{_libdir}/libmpg123.so.*
+%files libs
+%license COPYING
+%doc NEWS
+%{_libdir}/lib%{name}.so.*
+%{_libdir}/lib%{out}.so.*
 
-%files -n libmpg123-devel
-%doc doc/BENCHMARKING doc/README.gain doc/html doc/examples
-%{_includedir}/mpg123.h
-%{_libdir}/libmpg123.so
-%{_libdir}/pkgconfig/libmpg123.pc
-%{_mandir}/man3/*.3*
-
+%files libs-devel
+%doc NEWS.lib%{name} doc/html doc/examples doc/BENCHMARKING doc/README.gain
+%{_includedir}/%{name}.h
+%{_includedir}/%{out}.h
+%{_includedir}/%{fmt}.h
+%{_libdir}/lib%{name}.so
+%{_libdir}/lib%{out}.so
+%{_libdir}/pkgconfig/lib%{name}.pc
+%{_libdir}/pkgconfig/lib%{out}.pc
 
 %changelog
+* Tue Jul 26 2016 Igor Gnatenko <ignatenko@redhat.com> - 1.23.6-2
+- Provide old name for libs and libs-devel subpkgs
+
+* Sat Jul 09 2016 Igor Gnatenko <ignatenko@redhat.com> - 1.23.6-1
+- Update to 1.23.6
+
+* Mon Jun 27 2016 Igor Gnatenko <ignatenko@redhat.com> - 1.23.4-1
+- Update to 1.23.4
+- Use weak and rich deps for plugins
+- rename libmpg123 to mpg123-libs
+- Drop usage of alternatives (nothing uses it actually)
+- Correct license
+
+* Sat Oct 31 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.22.4-1
+- New upstream release 1.22.4 (rf3802)
+
+* Mon Jun 22 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.22.2-2
+- Fix playback of files with apetags
+
+* Sun Jun 21 2015 Hans de Goede <j.w.r.degoede@gmail.com> - 1.22.2-1
+- New upstream release 1.22.2
+
+* Mon Sep 01 2014 Sérgio Basto <sergio@serjux.com> - 1.19.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Sun Apr  6 2014 Hans de Goede <j.w.r.degoede@gmail.com> - 1.19.0-1
 - Update to 1.19.0
 - Enable (optional) use of NEON on arm
