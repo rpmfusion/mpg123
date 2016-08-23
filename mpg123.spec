@@ -20,9 +20,11 @@ BuildRequires:  pkgconfig(alsa)
 
 Requires:       %{name}-libs%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
+%if 0%{?fedora} || 0%{?rhel} >= 8
 Recommends:     (%{name}-plugins-pulseaudio%{?_isa} if pulseaudio%{?_isa})
 Recommends:     (%{name}-plugins-jack%{?_isa} if jack-audio-connection-kit%{?_isa})
 Recommends:     (%{name}-plugins-portaudio%{?_isa} if portaudio%{?_isa})
+%endif
 
 %global _description \
 Real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3 (most\
@@ -35,7 +37,9 @@ libraries.
 Summary:        Plulseaudio output plug-in for %{name}
 BuildRequires:  pkgconfig(libpulse-simple)
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+%if 0%{?fedora} || 0%{?rhel} >= 8
 Enhances:       %{name}%{?_isa}
+%endif
 
 %description plugins-pulseaudio %{_description}
 
@@ -45,7 +49,9 @@ Pulseaudio output plug-in.
 Summary:        JACK output plug-in for %{name}
 BuildRequires:  pkgconfig(jack)
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+%if 0%{?fedora} || 0%{?rhel} >= 8
 Enhances:       %{name}%{?_isa}
+%endif
 Obsoletes:      %{name}-plugins-extras < 1.23.4-1
 
 %description plugins-jack %{_description}
@@ -56,7 +62,9 @@ JACK output plug-in.
 Summary:        PortAudio output plug-in for %{name}
 BuildRequires:  pkgconfig(portaudio-2.0)
 Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+%if 0%{?fedora} || 0%{?rhel} >= 8
 Enhances:       %{name}%{?_isa}
+%endif
 
 %description plugins-portaudio %{_description}
 
