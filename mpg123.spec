@@ -3,7 +3,7 @@
 
 Name:           mpg123
 Version:        1.23.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3
 
 License:        LGPLv2+
@@ -103,7 +103,7 @@ popd
 
 %install
 %make_install
-find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
+rm %{buildroot}%{_libdir}/*.la
 
 %post libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
@@ -117,18 +117,18 @@ find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
 %doc %{_mandir}/man1/%{name}.1*
 %doc %{_mandir}/man1/%{out}.1*
 %dir %{_libdir}/%{name}/
-%{_libdir}/%{name}/output_alsa.so
-%{_libdir}/%{name}/output_dummy.so
-%{_libdir}/%{name}/output_oss.so
+%{_libdir}/%{name}/output_alsa.*
+%{_libdir}/%{name}/output_dummy.*
+%{_libdir}/%{name}/output_oss.*
 
 %files plugins-pulseaudio
-%{_libdir}/%{name}/output_pulse.so
+%{_libdir}/%{name}/output_pulse.*
 
 %files plugins-jack
-%{_libdir}/%{name}/output_jack.so
+%{_libdir}/%{name}/output_jack.*
 
 %files plugins-portaudio
-%{_libdir}/%{name}/output_portaudio.so
+%{_libdir}/%{name}/output_portaudio.*
 
 %files libs
 %license COPYING
@@ -147,6 +147,10 @@ find %{buildroot}%{_libdir} -type f -name '*.la' -delete -print
 %{_libdir}/pkgconfig/lib%{out}.pc
 
 %changelog
+* Mon Sep  5 2016 Hans de Goede <j.w.r.degoede@gmail.com> - 1.23.6-3
+- Do not remove output plugin .la files so that libout123 can actually
+  find them
+
 * Tue Jul 26 2016 Igor Gnatenko <ignatenko@redhat.com> - 1.23.6-2
 - Provide old name for libs and libs-devel subpkgs
 
